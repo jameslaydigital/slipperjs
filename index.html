@@ -1,12 +1,33 @@
 <html>
 	<head>
+		<style type="text/css">
+#receiver {
+	font-family:sans-serif;
+	font-weight: 300;
+	color: #333;
+}
+
+#emitter {
+	font-family: sans-serif;
+	padding: 5px;
+	border: #ccc solid 1px;
+}
+
+h1 {
+	font-family: sans-serif;
+	font-weight: 300;
+}
+		</style>
 	</head>
+
 	<body>
+		<h1>This is a test file for development.</h1>
+		<div style="font-size:10px;color:#777;font-family:sans-serif;">Type in the box &darr; &darr; </div>
+		<input id="emitter" type="text" /><br /><br />
 		<div id="receiver"></div>
-		<div>
-			<input id="emitter" type="text" />
-		</div>
 		<script type="text/javascript" src="hm.js"></script>
-		<script type="text/javascript" src="fw.js"></script>
+		<script type="text/javascript" src="slipper.js"></script>
+		<script type="text/javascript" src="testfile.js"></script>
 	</body>
+
 </html>

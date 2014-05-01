@@ -8,8 +8,13 @@ about
 =====
 
 ```javascript
-var sl = new Slipper({a:"hi", b:"there"});
-sl.addEvent("get", "a", function(value) {
-	console.log("value of a is " + value);
-});
+
+function action (val) {
+	console.log("value of a is " + val);
+}
+
+var sl = new Slipper();
+sl.addEvent("get", "number", action);
+sl.number = 5;
+
 ```

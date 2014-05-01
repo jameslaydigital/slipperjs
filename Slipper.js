@@ -1,5 +1,19 @@
 var Slipper = (function() {
 
+	//Returns true if it is a DOM node
+	function isNode(o){
+		return (
+			typeof Node === "object" ? o instanceof Node : o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+		);
+	}
+
+	//Returns true if it is a DOM element    
+	function isElement(o){
+		return (
+			typeof HTMLElement === "object" ? o instanceof HTMLElement : o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName==="string"
+		);
+	}
+
 	var FunctionMap = (function() {
 		// how does the hash map work?
 		// it will contain an internal array
@@ -161,13 +175,15 @@ var Slipper = (function() {
 					set : function(value) {
 						input[key] = value;
 						this.trigger(key, "set", input[key]);
+
+
 						return input[key];
 					},
 					enumerable : true,
 					configurable : true,
 				});
 			}).call(this, key);
-		} else if (typeof input[key] == "object") {
+		} else if (typeof(input[key]) == "object") {
 			//console.log("TYPEOF KEY IS OBJECT");
 			(function(key) {
 				var fw = new SL(input[key]);
@@ -211,10 +227,21 @@ var Slipper = (function() {
 		return newobj;
 	}
 	function SL(input) {
-		if ( typeof input == "undefined" ) {
+		if ( typeof(input) == "undefined" ) {
 			input = {};
 		}
+		if ( typeof(input) != "object" ) {
+			return null;
+		}
+		if ( isElement(input) ) {
+			throw new TypeError("Cannot spawn watcher for DOM elements.");
+		}
+		if ( isNode(input) ) {
+			throw new TypeError("Cannot spawn watcher for DOM nodes.");
+		}
 		if ( this === topLevelObject ) {
+			//if the user forgot to use the "new" keyword.
+			//can't be just "window" because node uses "global".
 			return new SL(input);
 		}
 		Object.defineProperty(this, "bypass",	{value:input, configurable: true, enumerable:false});
@@ -228,6 +255,7 @@ var Slipper = (function() {
 			enumerable : false,
 		});
 	}
+
 	var gets = new FunctionMap();
 	var sets = new FunctionMap();
 	SL.prototype = [];
@@ -297,73 +325,6 @@ if ( typeof module != "undefined" ) {
 	module.exports = Slipper;
 }
 /*
-
-	TRUE MVC:
-	In true MVC philosophy, the (M)odel can speak to the (V)iew, the (V)iew can speak to the (C)ontroller, and the 
-	(C)ontroller can speak to the (M)odel.  No backward communication is allowed.  While enforcing this paradigm is 
-	a hopeless cause, designing the system to work best with one-way communication is more intuitive and true with this 
-	framework than most others.  I will explain:
-
-		Angular js implements a different design paradigm than MVC, and those who try to design an MVC application 
-		through Angular will find it difficult at some point.  Angular simulates synchronicity between the view and the 
-		model by hijacking the event loop. This is problematic because the view will not synchronize with the data when you 
-		modify or access the model programatically (perhaps through a callback after an asynchronous event).  To the credit 
-		of Angular, it provides methods to overcome this tribulation, but it's not intuitive.
-
-		Backbone js properly provides MVC, but the learning curve is steep.  Backbone provides specialized data types which 
-		interface with the data through explicit getter and setter methods.  It's these getter and setter methods which trigger 
-		the synchronization logic for the views.
-
-		I personally learned Backbone first, and I liked it.  When I learned Angular, I liked it much more and found that my 
-		productivity went through the roof.  I feel like the primary reason for the spike in productivity can be attributed to 
-		the more friendly learning curve of Angular and the ease through which you can bind data to the view.
-
-		With a large number of built-in directives and an included templating language, Angular was the obvious choice.
-		However, had backbone come with "batteries included", Angular still has one MAJOR advantage: you don't have to read 
-		a tutorial to interact with the model.  They're all just good ol' fashioned javascript datatypes.
-
-		The closest I can bring these worlds together is to provide an interface to the data with transparent getters and setters.
-		The interface should act almost exactly like Javascript's built-in datatypes.  However, the view logic is not dependent on 
-		the DOM event loop, but rather by transparent interaction with the interface.
-
-		This is difficult to communicate, and truly the advantages of this method are ineffable without a long-winded speech.
-		So, let me demonstrate achieving the same end goal through all three frameworks:
-
-			Backbone:
-				<div id="receiver"></div>
-				<input type="text" id="emitter" />
-				<script type="text/javascript">
-				</script>
-
-			Angular:
-				<div>{{model.a}}</div>
-				<input type="text" ng-bind="model.a" />
-				<script type="text/javascript">
-				</script>
-
-			Framework:
-				<div id="receiver"></div>
-				<input type="text" id="emitter" />
-				<script type="text/javascript">
-					var IF = SL({
-						a : "first element",
-						b : "second",
-					});
-					emitter.onkeypress = function() {
-						IF.a = this.value;
-					}
-					IF.addEvent("get", "a", function(value) {
-						document.getElementById("receiver").innerHTML = value;
-					});
-				</script>
-
-
-	BINDING:
-	In the same way Angular js provides attributes for binding, some system must be available to simplify
-	communication with the views.
-
-	TEMPLATES:
-	Angular accomplishes templating through the use of templates and directives.
 
 	DATA REASSIGNMENT VIA THE INTERFACE:
 	The most practial example I can think of for this framework is to use it to automatically 

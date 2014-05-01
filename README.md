@@ -14,7 +14,7 @@ function action (val) {
 }
 
 var sl = new Slipper();
-sl.addEvent("get", "number", action);
+sl.addGet("number", action);
 sl.number = 5;
 //--> "number is 5"
 
@@ -37,16 +37,16 @@ var users = [
 ];
 
 var sl = new Slipper();
-sl.currentUser.addEvent("set", "fname", function(val) {
-	alert("CURRENT USER IS NOW " + val + "!");
+sl.currentUser.addSet("fname", function(val) {
+	alert("I'm " + val);
 });
 
 sl.currentUser = users[0];
-// --> "CURRENT USER IS NOW JAMES!"
+// --> "I'm james!"
 sl.currentUser = users[1];
-// --> "CURRENT USER IS NOW JOHN!"
+// --> "I'm john!"
 sl.currentUser = users[2];
-// --> "CURRENT USER IS NOW JANE!"
+// --> "I'm jane!"
 
 ```
 

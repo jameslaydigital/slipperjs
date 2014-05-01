@@ -1,32 +1,79 @@
 <html>
 	<head>
 		<style type="text/css">
-#receiver {
-	font-family:sans-serif;
+.user {
+	cursor: pointer;
+	border: #ccc solid 1px;
+	padding: 5px;
+	display: inline-block;
+}
+
+.user.selected {
+	background-color: #acf;
+}
+
+div, input, h1 {
+	font-family: sans-serif;
 	font-weight: 300;
+}
+
+tab {
+	width: 50px;
+	display: inline-block;
+}
+
+code {
+	font-family: courier;
+	font-size: 12px;
+	font-weight: 300;
+}
+
+#receiver {
 	color: #333;
 }
 
 #emitter {
-	font-family: sans-serif;
 	padding: 5px;
 	border: #ccc solid 1px;
 }
 
-h1 {
-	font-family: sans-serif;
-	font-weight: 300;
+#fname, #lname, #age {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 50px;
 }
+
+#fname:before {
+	content : "First: ";
+	color: #ccc;
+}
+#lname:before {
+	content : "Last: ";
+	color: #ccc;
+}
+#age:before {
+	content : "Age: ";
+	color: #ccc;
+}
+
 		</style>
 	</head>
 
-	<body>
+	<body sl-read>
 		<h1>This is a test file for development.</h1>
 		<div style="font-size:10px;color:#777;font-family:sans-serif;">Type in the box &darr; &darr; </div>
-		<input id="emitter" type="text" /><br /><br />
-		<div id="receiver"></div>
+		<input sl-write="stuff.a" type="text" /><br /><br />
+		<div sl-read="stuff.a"></div>
+
+
+		<hr />
+		<div id="userSelection"> </div>
+		<div id="fname"></div>
+		<div id="lname"></div>
+		<div id="age"></div>
+
 		<script type="text/javascript" src="hm.js"></script>
-		<script type="text/javascript" src="slipper.js"></script>
+		<script type="text/javascript" src="Slipper.js"></script>
 		<script type="text/javascript" src="testfile.js"></script>
 	</body>
 

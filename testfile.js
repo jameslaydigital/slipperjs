@@ -1,3 +1,4 @@
+
 (function() {
 
 	function whatis(obj) {
@@ -11,7 +12,7 @@
 	//UNIT TESTS
 	function runUnitTests() {
 		window.receiver	= document.getElementById("receiver");
-		window.emitter		= document.getElementById("emitter");
+		//window.emitter		= document.getElementById("emitter");
 
 		window.data = {
 			a : 1,
@@ -25,26 +26,27 @@
 
 		stuff.addEvent("get", 'a', function(value) {
 						console.log("a was got!");
-						receiver.innerHTML = value;
+						//receiver.innerHTML = value;
 					});
 
 		stuff.addEvent("set", 'a', function(value) {
 						console.log("a was set!");
-						receiver.innerHTML = value;
+						console.log("value = " + value);
+						//receiver.innerHTML = value;
 					});
 
 		stuff.addEvent("set", 'c', function(value) {
 						console.log("c was set!");
 						//console.log("set is ", value);
-						receiver.innerHTML = value;
+						//receiver.innerHTML = value;
 					});
 
-		emitter.onkeydown = function() {
-			var input = this;
-			setTimeout(function() {
-				stuff.a = input.value;
-			}, 0);
-		}
+		//emitter.onkeydown = function() {
+		//	var input = this;
+		//	setTimeout(function() {
+		//		stuff.a = input.value;
+		//	}, 0);
+		//}
 
 		//try adding an event before defining the property
 		console.log("runUnitTest: Should see: the_set_prop is me.");
@@ -125,21 +127,74 @@
 		console.log("runUnitTest: Should see: stuff.c.b was set to b new record!");
 		stuff.c.b = " b new record!";
 
-		console.log(whatis(stuff.c));
-		stuff.c = {
-			"a" : {
-				a : "this is my a",
-				b : "this is my b",
-			},
-			"hi": {
-				a : "this is a",
-				b: "this is b"
+	}
+
+	users = function() {
+		window.users = [
+			{	fname	: "James",
+				lname	: "Lay",
+				age		: 25, },
+			{	fname	: "Melissa",
+				lname	: "Guardian",
+				age		: 23, },
+			{	fname	: "Flynn",
+				lname	: "Holland",
+				age		: "25", },
+		];
+
+
+		window.currentUser = new Slipper({
+			person : 
+				{
+					fname : "",
+					lname : "",
+					age : 0
+				},
+			view : undefined,
+		});
+
+		currentUser.person.addEvent("set", "fname", function(value) { 
+			document.getElementById("fname" ).innerHTML = value;
+		});
+
+		currentUser.person.addEvent("set", "lname", function(value) {
+			document.getElementById("lname").innerHTML = value;
+		});
+
+		currentUser.person.addEvent("set", "age", function(value) {
+			document.getElementById("age").innerHTML = value;
+		});
+
+		currentUser.addEvent("set", "view", function(value) {
+			var us = document.getElementById("userSelection");
+			for ( var i = 0; i < us.children.length; i++ ) {
+				us.children[i].className = "user";
 			}
-		};
-		console.log(whatis(stuff.c));
+			value.className = "user selected";
+		});
+
+		currentUser.person = users[0];
+		var i = 0;
+
+		(function() {
+			for ( var i = 0; i < users.length; i++ ) {
+				var div = document.createElement("div");
+				div.className = "user";
+				div.innerHTML = users[i].fname + " " + users[i].lname;
+
+				div.onclick = (function(user) {
+					currentUser.person = user;
+					currentUser.view = this;
+				}).bind(div, users[i]);
+
+				var us = document.getElementById("userSelection");
+				us.appendChild(div);
+			}
+		})();
 
 	}
 
+	users();
 	runUnitTests();
 
 })();

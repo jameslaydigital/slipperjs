@@ -1,7 +1,7 @@
 slipperjs
 =========
 
-Extremely intuitive data watching for javascript.  Try it on, you might like it!
+Extremely intuitive data watching for javascript.
 
 
 example
@@ -41,8 +41,12 @@ sl.currentUser.addEvent("set", "fname", function(val) {
 	alert("CURRENT USER IS NOW " + val + "!");
 });
 
-sl.currentUser = users[1]; // this works recursively ;-)
+sl.currentUser = users[0];
+// --> "CURRENT USER IS NOW JAMES!"
+sl.currentUser = users[1];
 // --> "CURRENT USER IS NOW JOHN!"
+sl.currentUser = users[2];
+// --> "CURRENT USER IS NOW JANE!"
 
 ```
 

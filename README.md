@@ -10,11 +10,12 @@ about
 ```javascript
 
 function action (val) {
-	console.log("value of a is " + val);
+	console.log("number is " + val);
 }
 
 var sl = new Slipper();
 sl.addEvent("get", "number", action);
 sl.number = 5;
+//--> "number is 5"
 
 ```

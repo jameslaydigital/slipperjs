@@ -3,6 +3,26 @@ slipperjs
 
 Extremely intuitive data watching for javascript.
 
+download
+========
+
+You only need the Slipper.js file.
+You can use it in Node.js, Chrome, and Firefox.
+Untested in IE and older browsers.
+
+```bash
+wget "http://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js"
+#or
+curl "http://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js" > Slipper.js
+```
+In node.js:
+```javascript
+var Slipper = require("/path/to/Slipper.js");
+```
+In browsers:
+```html
+<script type="text/javascript" src="/URI/to/Slipper.js"></script>
+```
 
 example
 =======

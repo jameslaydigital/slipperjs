@@ -266,20 +266,33 @@ var Slipper = (function() {
 		return true;
 	};
 
-	SL.prototype.addEvent = function(type, index, action) {
+	SL.prototype.addGet = function(index, action) {
 		updateChanges.call(this);
-		if ( !(index in this) ) {
-			//if the interface's key does not exist...
+		if ( !(index in this) )
 			makeSettersForKey.call(this, index, this.bypass);
-		}
+			//if the interface's key does not exist...
+
+		gets.put(this.bypass, index, action.bind(this));
+	}
+
+	SL.prototype.addSet = function(index, action) {
+		updateChanges.call(this);
+		if ( !(index in this) )
+			makeSettersForKey.call(this, index, this.bypass);
+			//if the interface's key does not exist...
+
+		sets.put(this.bypass, index, action.bind(this));
+	}
+
+	SL.prototype.addEvent = function(type, index, action) {
 		if ( type == "get" ) {
-			gets.put(this.bypass, index, action.bind(this));
+			this.addGet.call(this, index, action);
 		} else if ( type == "set" ) {
-			sets.put(this.bypass, index, action.bind(this));
+			this.addSet.call(this, index, action);
 		} else {
 			throw new TypeError("Only get and set are allowed.");
 		}
-	};
+	}
 
 	SL.prototype.trigger = function(key, op, value) {
 		//console.log("trigger says: ");
@@ -314,6 +327,8 @@ var Slipper = (function() {
 	};
 
 	Object.defineProperty(SL.prototype, "trigger", {enumerable:false});
+	Object.defineProperty(SL.prototype, "addGet", {enumerable:false});
+	Object.defineProperty(SL.prototype, "addSet", {enumerable:false});
 	Object.defineProperty(SL.prototype, "addEvent", {enumerable:false});
 	Object.defineProperty(SL.prototype, "clearEvents", {enumerable:false});
 	Object.defineProperty(SL, "bypass", {enumerable:false});

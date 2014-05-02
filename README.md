@@ -7,8 +7,7 @@ download
 ========
 
 You only need the Slipper.js file.
-You can use it in Node.js, Chrome, and Firefox.
-Untested in IE and older browsers.
+You can use it in Node.js, Chrome, Firefox, and IE 9+.
 
 ```bash
 wget "http://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js"

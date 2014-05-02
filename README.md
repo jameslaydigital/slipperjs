@@ -10,9 +10,9 @@ You only need the Slipper.js file.
 You can use it in Node.js, Chrome, Firefox, and IE 9+.
 
 ```bash
-wget "http://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js"
+wget "https://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js"
 #or
-curl "http://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js" > Slipper.js
+curl "https://raw.githubusercontent.com/jameslaydigital/slipperjs/master/Slipper.js" > Slipper.js
 ```
 In node.js:
 ```javascript

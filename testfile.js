@@ -134,11 +134,11 @@
 			{	fname	: "James",
 				lname	: "Lay",
 				age		: 25, },
-			{	fname	: "Melissa",
-				lname	: "Guardian",
+			{	fname	: "Sarah",
+				lname	: "Doe",
 				age		: 23, },
-			{	fname	: "Flynn",
-				lname	: "Holland",
+			{	fname	: "Schplain",
+				lname	: "Hollandisch",
 				age		: "25", },
 		];
 
